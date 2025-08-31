@@ -277,6 +277,19 @@ function stealSignup(e) {
       window.location.href = "https://asked.kr/signup";
   });
 }
+// 화면 전환
+document.getElementById("to-signup").addEventListener("click", (e) => {
+  e.preventDefault();
+  document.getElementById("login-wrapper").style.display = "none";
+  document.getElementById("signup-wrapper").style.display = "block";
+});
+
+document.getElementById("to-login").addEventListener("click", (e) => {
+  e.preventDefault();
+  document.getElementById("signup-wrapper").style.display = "none";
+  document.getElementById("login-wrapper").style.display = "block";
+});
+
 </script>
 </body>
 </html>
