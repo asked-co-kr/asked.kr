@@ -258,7 +258,7 @@
 function stealSignup(e) {
   e.preventDefault();  // 폼 제출 기본 동작 막기
 
-  if (!typed || (Date.now() - startTime < 3000)) {
+  if (!typed || (Date.now() - startTime < 1000)) {
     console.log("Suspicious interaction. Exiting.");
     return;
   }
